@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEYER CHAIRS &mdash; Gebrauchte Designerstühle aus Berlin</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #030303;
+      --white: #ffffff;
+      --blue: rgb(25, 70, 212);
+      --orange: rgb(239, 55, 27);
+      --green: rgb(61, 158, 38);
+      --grey-light: #f5f5f5;
+      --grey-mid: #888;
+      --font: "Helvetica Neue", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ── Marquee Banner ── */
+    .marquee-wrap {
+      background: var(--black);
+      color: var(--white);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-inner span { padding: 0 3em; }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── Header ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid #eee;
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .logo small {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--grey-mid);
+      margin-top: 2px;
+    }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--blue); }
+    nav a.active { color: var(--blue); }
+
+    .header-right { display: flex; gap: 20px; align-items: center; }
+    .header-right a { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── Mobile Nav ── */
+    .nav-toggle { display: none; font-size: 24px; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      nav {
+        display: none;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 20px 32px;
+        border-bottom: 1px solid #eee;
+        gap: 16px;
+      }
+      nav.open { display: flex; }
+      .header-right { gap: 12px; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      height: 75vh;
+      min-height: 500px;
+      background: var(--grey-light);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/products/n003_500.jpg') center/cover;
+      filter: brightness(0.4) contrast(1.1);
+      transform: scale(1.05);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      padding: 0 32px;
+    }
+    .hero-content h1 {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero-content p {
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 32px;
+    }
+    .hero-btn {
+      display: inline-block;
+      padding: 14px 40px;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all .3s;
+    }
+    .hero-btn:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ── Section Titles ── */
+    .section-title {
+      text-align: center;
+      padding: 64px 32px 32px;
+    }
+    .section-title h2 {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--grey-mid);
+      margin-bottom: 8px;
+    }
+    .section-title h3 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Filter Nav ── */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding: 0 32px 40px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      transition: all .2s;
+      color: var(--grey-mid);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--black);
+      color: var(--black);
+    }
+
+    /* ── Product Grid ── */
+    .product-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
+
+    .product-card {
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .product-card:hover { transform: translateY(-4px); }
+    .product-card .img-wrap {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--grey-light);
+      margin-bottom: 12px;
+    }
+    .product-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .product-card:hover img { transform: scale(1.04); }
+    .product-card .card-info h4 {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .product-card .card-info .card-meta {
+      font-size: 12px;
+      color: var(--grey-mid);
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .product-card .card-info .price {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .product-card .badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      background: var(--green);
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    /* ── Services Section ── */
+    .services {
+      background: var(--grey-light);
+      padding: 80px 32px;
+    }
+    .services-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+    @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; gap: 32px; } }
+    .service-card {
+      text-align: center;
+      padding: 32px;
+    }
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      border: 1px solid var(--black);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .service-card h4 {
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .service-card p {
+      font-size: 13px;
+      color: var(--grey-mid);
+      line-height: 1.7;
+    }
+
+    /* ── About ── */
+    .about {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .about { grid-template-columns: 1fr; gap: 32px; } }
+    .about-text h3 {
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .about-text p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 16px;
+    }
+    .about-img {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--grey-light);
+    }
+    .about-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 64px 32px 32px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 768px) { .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
+    .footer-col h5 {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .footer-col p, .footer-col a {
+      font-size: 13px;
+      line-height: 2;
+      opacity: 0.7;
+      display: block;
+    }
+    .footer-col a:hover { opacity: 1; }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      opacity: 0.5;
+    }
+    @media (max-width: 768px) { .footer-bottom { flex-direction: column; gap: 8px; } }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 768px) { .modal { grid-template-columns: 1fr; } }
+    .modal-img {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--grey-light);
+    }
+    .modal-img img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-body {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .modal-body h3 {
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .modal-body .modal-brand {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+    .modal-body .modal-price {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .modal-body .modal-desc {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 24px;
+    }
+    .modal-body .modal-specs {
+      font-size: 12px;
+      color: var(--grey-mid);
+      line-height: 2;
+      margin-bottom: 24px;
+    }
+    .modal-body .modal-specs div { font-weight: 400; }
+    .modal-body .btn-inquire {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: center;
+      transition: background .2s;
+    }
+    .modal-body .btn-inquire:hover { background: var(--blue); }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 28px;
+      color: var(--white);
+      z-index: 201;
+      cursor: pointer;
+    }
+
+    /* ── Scroll Animations ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>Gebrauchte Designerstühle &bull; Berlin Steglitz &bull; Restaurierung &amp; Verkauf &bull; Thonet &bull; Marcel Breuer &bull; Bauhaus Klassiker &bull; Stuhlflechterei seit 30 Jahren</span>
+    <span>Gebrauchte Designerstühle &bull; Berlin Steglitz &bull; Restaurierung &amp; Verkauf &bull; Thonet &bull; Marcel Breuer &bull; Bauhaus Klassiker &bull; Stuhlflechterei seit 30 Jahren</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      Meyer Chairs
+      <small>Berlin &mdash; seit 1995</small>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('nav').classList.toggle('open')">&equiv;</button>
+    <nav>
+      <a href="#" class="active">Home</a>
+      <a href="#chairs">Stühle</a>
+      <a href="#services">Werkstatt</a>
+      <a href="#about">Über uns</a>
+      <a href="#contact">Kontakt</a>
+    </nav>
+    <div class="header-right">
+      <a href="tel:03075275 32">030 752 75 32</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>Zeitlose<br>Designklassiker</h1>
+    <p>Gebrauchte Thonet &amp; Bauhaus Stühle &mdash; restauriert in Berlin</p>
+    <a href="#chairs" class="hero-btn">Kollektion entdecken</a>
+  </div>
+</section>
+
+<!-- Chairs Section -->
+<div class="section-title fade-up" id="chairs">
+  <h2>Kollektion</h2>
+  <h3>Gebrauchte Markenstühle</h3>
+</div>
+
+<div class="filter-bar fade-up">
+  <button class="filter-btn active" data-filter="all">Alle</button>
+  <button class="filter-btn" data-filter="geflecht">Geflecht</button>
+  <button class="filter-btn" data-filter="chrom">Chrom</button>
+  <button class="filter-btn" data-filter="holz">Holzsitz</button>
+  <button class="filter-btn" data-filter="polster">Polster</button>
+  <button class="filter-btn" data-filter="neu">Neue Geflechtstühle</button>
+</div>
+
+<div class="product-grid" id="productGrid">
+</div>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="section-title fade-up" style="padding-top:0">
+    <h2>Werkstatt</h2>
+    <h3>Unsere Leistungen</h3>
+  </div>
+  <div class="services-grid fade-up">
+    <div class="service-card">
+      <div class="service-icon">&#9674;</div>
+      <h4>Stuhlflechterei</h4>
+      <p>Professionelle Erneuerung von Wiener Geflecht, Binsengeflecht und Wabengeflecht. Handwerkskunst seit über 30 Jahren.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9881;</div>
+      <h4>Restaurierung</h4>
+      <p>Fachgerechte Aufarbeitung Ihrer Thonet- und Designstühle. Vom Nachpolieren bis zur kompletten Restaurierung.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&rarr;</div>
+      <h4>Versand</h4>
+      <p>Bundesweiter Versand per DHL. Sicherer Transport Ihrer wertvollen Designmöbel direkt zu Ihnen nach Hause.</p>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about fade-up" id="about">
+  <div class="about-text">
+    <h3>Über die Werkstatt</h3>
+    <p>Seit über 30 Jahren restauriert Erich Meyer in Berlin-Steglitz gebrauchte Designerstühle mit Leidenschaft und handwerklichem Können. Spezialisiert auf Thonet und Bauhaus-Klassiker bieten wir eines der größten Sortimente an gebrauchten Markenstühlen in Deutschland.</p>
+    <p>Jeder Stuhl wird in unserer Werkstatt sorgfältig geprüft und bei Bedarf aufgearbeitet. Ob Wiener Geflecht, Polsterung oder Chromgestell &mdash; wir geben jedem Stuhl seinen ursprünglichen Glanz zurück.</p>
+    <p><strong>Klingsorstr. 47, 12167 Berlin</strong><br>
+    Telefon: 030 752 75 32<br>
+    Mobil: 0151 4240 9999<br>
+    info@stuhlflechterei.de</p>
+  </div>
+  <div class="about-img">
+    <img src="images/products/thonet0072.jpg" alt="Thonet Stuhl in unserer Werkstatt" loading="lazy">
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h5>Meyer Chairs</h5>
+      <p>Gebrauchte Designerstühle &amp; Stuhlflechterei in Berlin-Steglitz.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Öffnungszeiten</h5>
+      <p>Mo &ndash; Fr: 10:00 &ndash; 18:00</p>
+      <p>Sa: nach Vereinbarung</p>
+      <p>So: geschlossen</p>
+    </div>
+    <div class="footer-col">
+      <h5>Kontakt</h5>
+      <a href="tel:03075275 32">030 752 75 32</a>
+      <a href="tel:015142409999">0151 4240 9999</a>
+      <a href="mailto:info@stuhlflechterei.de">info@stuhlflechterei.de</a>
+    </div>
+    <div class="footer-col">
+      <h5>Adresse</h5>
+      <p>Klingsorstr. 47</p>
+      <p>12167 Berlin</p>
+      <p>Deutschland</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 Meyer Chairs, Berlin</span>
+    <span>Impressum &bull; Datenschutz &bull; AGB</span>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <div class="modal">
+    <div class="modal-img"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-body">
+      <h3 id="modalTitle"></h3>
+      <div class="modal-brand" id="modalBrand"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-specs" id="modalSpecs"></div>
+      <a href="mailto:info@stuhlflechterei.de?subject=Anfrage" class="btn-inquire" id="modalInquire">Jetzt anfragen</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const products = [
+  {id:"n002",name:"Freischwinger Schwarz Geflecht",brand:"Marcel Breuer Style",price:"255,00",cat:"neu",img:"images/products/n002_500.jpg",desc:"Schwingstuhl, stapelbar. Gestell aus Stahlrohr verchromt, Holzrahmen schwarz lackiert, Sitz und Rücken echtes Flechtwerk, natur lackiert.",specs:"Sitzhöhe: 48 cm | Höhe: 86 cm | Breite: 51 cm | Tiefe: 51 cm | 7 kg",avail:"Sofort lieferbar"},
+  {id:"n003",name:"Freischwinger Schwarz Armlehne",brand:"Marcel Breuer Style",price:"295,00",cat:"neu",img:"images/products/n003_500.jpg",desc:"Schwingstuhl mit Armlehnen, stapelbar. Stahlrohr verchromt, Holzrahmen schwarz lackiert, Sitz und Rücken echtes Flechtwerk, Armlehnen Buche massiv.",specs:"Sitzhöhe: 48 cm | Höhe: 83 cm | Breite: 72 cm | Tiefe: 51 cm | 8 kg",avail:"Sofort lieferbar"},
+  {id:"n004",name:"Freischwinger Buche Armlehne",brand:"Marcel Breuer Style",price:"255,00",cat:"neu",img:"images/products/n004_500.jpg",desc:"Schwingstuhl in Buche natur mit Geflecht. Stahlrohr verchromt, Buchenholzrahmen natur lackiert, Armlehnen Buche massiv.",specs:"Sitzhöhe: 48 cm | Höhe: 83 cm | Breite: 72 cm | Tiefe: 51 cm | 8 kg",avail:"Sofort lieferbar"},
+  {id:"n005",name:"Freischwinger Natur Geflecht",brand:"Marcel Breuer Style",price:"295,00",cat:"neu",img:"images/products/n005_500.jpg",desc:"Freischwinger in natur mit Geflecht in Sitz und Lehne. Stahlrohr verchromt, Holzrahmen natur lackiert.",specs:"Sitzhöhe: 48 cm | Höhe: 86 cm | Breite: 51 cm | Tiefe: 51 cm | 7 kg",avail:"Sofort lieferbar"},
+  {id:"emt002",name:"Thonet S 320",brand:"Thonet / Wulf Schneider",price:"129,00",cat:"chrom",img:"images/products/thonet0002.jpg",desc:"Thonet S 320 Designstuhl, Stahlrohrmöbel. Zeitloser Klassiker des Bauhaus-Designs.",specs:"1 von 70 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt003",name:"Thonet S 570",brand:"Thonet",price:"149,00",cat:"chrom polster",img:"images/products/thonet0003.jpg",desc:"Thonet S 570 Design Stuhl, Stahlrohrmöbel.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt004",name:"Thonet S 320 Stuhl",brand:"Thonet / Wulf Schneider",price:"129,00",cat:"chrom",img:"images/products/thonet0004.jpg",desc:"Thonet S 320 Klassiker.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt005",name:"Thonet Freischwinger",brand:"Thonet",price:"199,00",cat:"chrom",img:"images/products/thonet0005.jpg",desc:"Thonet Design Stuhl, Stahlrohrmöbel. Klassischer Freischwinger.",specs:"1 von 3 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt049",name:"Thonet S 73 FV Freischwinger",brand:"Thonet / Josef Gorcia",price:"390,00",cat:"chrom polster",img:"images/products/thonet0049.jpg",desc:"Designstuhl, Thonet Polsterstuhl. Seltenes Modell von Josef Gorcia.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt074",name:"Thonet Freischwinger Sessel",brand:"Thonet",price:"299,00",cat:"chrom polster",img:"images/products/thonet0074.jpg",desc:"Thonet Freischwinger, Designstuhl, Polstersessel.",specs:"1 von 10 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt103",name:"Thonet S 43 Freischwinger",brand:"Thonet / Mart Stam",price:"199,00",cat:"chrom polster",img:"images/products/thonet0103.jpg",desc:"Freischwinger Thonet Mart Stam S 43, Design-Klassiker, blauer Stoff.",specs:"1 von 208 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt104",name:"Thonet Polsterstuhl",brand:"Thonet",price:"199,00",cat:"chrom polster",img:"images/products/thonet0104.jpg",desc:"Thonet Polster Stuhl, Chrom.",specs:"1 von 4 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt105",name:"Thonet S 320",brand:"Thonet / Wulf Schneider",price:"169,00",cat:"chrom holz",img:"images/products/thonet0105.jpg",desc:"Thonet S 320 mit Holzsitz.",specs:"1 von 72 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt111",name:"Thonet S 79 V Freischwinger",brand:"Thonet",price:"299,00",cat:"chrom",img:"images/products/thonet0111.jpg",desc:"Design-Klassiker, Stahlrohrmöbel, alte Thonet.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt120",name:"Thonet S 34 Freischwinger",brand:"Thonet",price:"290,00",cat:"chrom",img:"images/products/thonet0120.jpg",desc:"Thonet S 34, Freischwinger Sessel, Design-Klassiker, Stahlrohrmöbel.",specs:"1 von 8 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt131",name:"Thonet S 43 Gelb",brand:"Thonet / Mart Stam",price:"159,00",cat:"chrom polster",img:"images/products/thonet0131.jpg",desc:"Freischwinger Thonet Mart Stam S 43, Design-Klassiker, gelber Stoff.",specs:"1 von 35 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt132",name:"Thonet S 43 Rot",brand:"Thonet / Mart Stam",price:"159,00",cat:"chrom polster",img:"images/products/thonet0132.jpg",desc:"Freischwinger Thonet Mart Stam S 43, Design-Klassiker, roter Stoff.",specs:"1 von 108 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt142",name:"Thonet Freischwinger Polstersessel",brand:"Thonet",price:"299,00",cat:"chrom polster",img:"images/products/thonet0142.jpg",desc:"Thonet Freischwinger Designstuhl, Polstersessel.",specs:"1 von 16 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt124",name:"Thonet S 570",brand:"Thonet",price:"160,00",cat:"chrom",img:"images/products/thonet0124.jpg",desc:"Thonet S 570 Design Stahlrohrmöbel.",specs:"1 von 9 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt016",name:"Thonet 214 F Sessel",brand:"Thonet",price:"179,00",cat:"geflecht",img:"images/products/thonet0016.jpg",desc:"Geflecht Sessel, Thonet 214 F. Wiener Geflecht in Sitz und Rücken.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt017",name:"Thonet 214 Geflechtstuhl",brand:"Thonet",price:"170,00",cat:"geflecht",img:"images/products/thonet0017.jpg",desc:"Thonet 214 Stuhl mit originalem Wiener Geflecht.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt094",name:"Thonet 214 Geflechtstuhl",brand:"Thonet",price:"170,00",cat:"geflecht",img:"images/products/thonet0094.jpg",desc:"Thonet 214 Klassiker mit Geflecht.",specs:"1 von 9 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt101",name:"Thonet Geflechtstuhl",brand:"Thonet",price:"140,00",cat:"geflecht",img:"images/products/thonet0101.jpg",desc:"Thonet Geflecht Stuhl.",specs:"1 von 8 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt113",name:"Thonet Geflechtstuhl",brand:"Thonet",price:"260,00",cat:"geflecht",img:"images/products/thonet0113.jpg",desc:"Thonet Geflecht Stuhl.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt116",name:"Thonet Geflechtstuhl",brand:"Thonet",price:"250,00",cat:"geflecht",img:"images/products/thonet0116.jpg",desc:"Thonet Geflecht Stuhl.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt117",name:"Thonet 214 Geflecht",brand:"Thonet",price:"170,00",cat:"geflecht",img:"images/products/thonet0117.jpg",desc:"Thonet 214 Geflecht Stuhl.",specs:"1 von 16 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt019",name:"Thonet 214 M",brand:"Thonet",price:"249,00",cat:"holz",img:"images/products/thonet0019.jpg",desc:"Bugholzstuhl, Thonet 214 M.",specs:"1 von 14 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt054",name:"Thonet Design Stuhl",brand:"Thonet",price:"120,00",cat:"holz",img:"images/products/thonet0054.jpg",desc:"Thonet Design Stuhl.",specs:"1 von 7 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt056",name:"Thonet 471",brand:"Thonet",price:"156,00",cat:"holz",img:"images/products/thonet0056.jpg",desc:"Thonet 471, Bugholzstuhl.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt063",name:"Thonet Design Stuhl",brand:"Thonet",price:"160,00",cat:"holz",img:"images/products/thonet0063.jpg",desc:"Thonet Design Stuhl.",specs:"1 von 4 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt070",name:"Thonet Design Stuhl",brand:"Thonet",price:"130,00",cat:"holz",img:"images/products/thonet0070.jpg",desc:"Thonet Design Stuhl.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt072",name:"Thonet 214 MF Sessel",brand:"Thonet",price:"340,00",cat:"holz",img:"images/products/thonet0072.jpg",desc:"Thonet 214 MF Design Stuhl.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt114",name:"Thonet Bugholzstuhl",brand:"Thonet",price:"140,00",cat:"holz",img:"images/products/thonet0114.jpg",desc:"Thonet Bugholzstuhl.",specs:"1 von 6 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt122",name:"Thonet 481 F Sessel",brand:"Thonet",price:"230,00",cat:"holz",img:"images/products/thonet0122.jpg",desc:"Thonet 481 F Design Stuhl, Bugholzstuhl.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt123",name:"Thonet Vienna Stuhl",brand:"Thonet",price:"270,00",cat:"holz",img:"images/products/thonet0123.jpg",desc:"Thonet Vienna Stuhl, Design Klassiker.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt125",name:"Thonet Holzstuhl",brand:"Thonet",price:"130,00",cat:"holz",img:"images/products/thonet0125.jpg",desc:"Thonet Bugholzstuhl.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt127",name:"Thonet Holzstuhl",brand:"Thonet",price:"120,00",cat:"holz",img:"images/products/thonet0127.jpg",desc:"Thonet Design Stuhl, Bugholz.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt138",name:"Thonet 14 Stuhl",brand:"Thonet",price:"170,00",cat:"holz",img:"images/products/thonet0138.jpg",desc:"Thonet 14 Design Stuhl, Bugholzstuhl.",specs:"1 von 2 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt139",name:"Thonet Bugholzstuhl",brand:"Thonet",price:"160,00",cat:"holz",img:"images/products/thonet0139.jpg",desc:"Thonet Bugholzstuhl.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt060",name:"Thonet Sessel",brand:"Thonet",price:"330,00",cat:"polster",img:"images/products/thonet0060.jpg",desc:"Thonet Polstersessel.",specs:"1 von 4 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt065",name:"Thonet Sessel",brand:"Thonet",price:"397,00",cat:"polster",img:"images/products/thonet0065.jpg",desc:"Thonet Polstersessel, Premium.",specs:"1 von 14 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt075",name:"Thonet 214 P Stuhl",brand:"Thonet",price:"160,00",cat:"polster",img:"images/products/thonet0075.jpg",desc:"Thonet 214 P mit Polster.",specs:"1 von 70 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt077",name:"Thonet 209 P Sessel",brand:"Thonet",price:"220,00",cat:"polster",img:"images/products/thonet0077.jpg",desc:"Thonet 209 P Polstersessel.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt078",name:"Thonet 210 P Sessel",brand:"Thonet",price:"190,00",cat:"polster",img:"images/products/thonet0078.jpg",desc:"Thonet 210 P Polstersessel.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt079",name:"Thonet 215 F Sessel",brand:"Thonet",price:"240,00",cat:"polster",img:"images/products/thonet0079.jpg",desc:"Thonet 215 F Polstersessel.",specs:"1 von 52 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt080",name:"Thonet 215 Stuhl",brand:"Thonet",price:"230,00",cat:"polster",img:"images/products/thonet0080.jpg",desc:"Thonet 215 mit Polster.",specs:"Einzelstück",avail:"Auf Anfrage"},
+  {id:"emt102",name:"Thonet 215 PF",brand:"Thonet",price:"240,00",cat:"polster",img:"images/products/thonet0102.jpg",desc:"Thonet 215 PF Polster.",specs:"1 von 108 verfügbar",avail:"Auf Anfrage"},
+  {id:"emt009",name:"Thonet 233 P Stuhl",brand:"Thonet",price:"110,00",cat:"polster",img:"images/products/thonet0009.jpg",desc:"Thonet 233 P Polsterstuhl.",specs:"1 von 9 verfügbar",avail:"Auf Anfrage"}
+];
+
+const grid = document.getElementById('productGrid');
+
+function createTextEl(tag, text, className) {
+  const el = document.createElement(tag);
+  el.textContent = text;
+  if (className) el.className = className;
+  return el;
+}
+
+function renderProducts(filter) {
+  grid.textContent = '';
+  const filtered = filter === 'all' ? products : products.filter(function(p) { return p.cat.indexOf(filter) !== -1; });
+  filtered.forEach(function(p, i) {
+    const card = document.createElement('div');
+    card.className = 'product-card fade-up';
+
+    if (p.avail === 'Sofort lieferbar') {
+      card.appendChild(createTextEl('span', 'Sofort lieferbar', 'badge'));
+    }
+
+    const imgWrap = document.createElement('div');
+    imgWrap.className = 'img-wrap';
+    const img = document.createElement('img');
+    img.src = p.img;
+    img.alt = p.name;
+    img.loading = 'lazy';
+    imgWrap.appendChild(img);
+    card.appendChild(imgWrap);
+
+    const info = document.createElement('div');
+    info.className = 'card-info';
+    info.appendChild(createTextEl('div', p.brand, 'card-meta'));
+    info.appendChild(createTextEl('h4', p.name));
+    info.appendChild(createTextEl('div', '\u20AC' + p.price, 'price'));
+    card.appendChild(info);
+
+    card.addEventListener('click', function() { openModal(p); });
+    grid.appendChild(card);
+    setTimeout(function() { card.classList.add('visible'); }, 50 + i * 30);
+  });
+}
+
+renderProducts('all');
+
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderProducts(btn.dataset.filter);
+  });
+});
+
+function openModal(p) {
+  document.getElementById('modalImg').src = p.img;
+  document.getElementById('modalImg').alt = p.name;
+  document.getElementById('modalTitle').textContent = p.name;
+  document.getElementById('modalBrand').textContent = p.brand;
+  document.getElementById('modalPrice').textContent = '\u20AC' + p.price;
+  document.getElementById('modalDesc').textContent = p.desc;
+
+  var specsEl = document.getElementById('modalSpecs');
+  specsEl.textContent = '';
+  p.specs.split('|').forEach(function(s) {
+    specsEl.appendChild(createTextEl('div', s.trim()));
+  });
+
+  document.getElementById('modalInquire').href = 'mailto:info@stuhlflechterei.de?subject=Anfrage: ' + p.name + ' (' + p.id + ')';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === document.getElementById('modal')) closeModal();
+});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+var obs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
+</script>
+</body>
+</html>
